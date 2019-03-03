@@ -19,21 +19,26 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Account account = new Account();
-        account.setUsername("hibernate");
-        account.setPassword("444");
 
-        Study study = new Study();
-        study.setName("s pring data jpa");
+        Post post = new Post();
+        post.setTitle("spring data jpa post");
 
-//        account.getStudies().add(study);
-//        study.setOwner(account);
+        Comment comment = new Comment();
+        comment.setComment("view quickly01");
+        post.addComment(comment);
 
-        account.addStudy(study);
+        Comment comment01 = new Comment();
+        comment01.setComment("view quickly02");
+        post.addComment(comment01);
 
         //Hibernate 이용
+//        Session session = entityManager.unwrap(Session.class);
+//        session.save(post);
+
+        //cascade delete
         Session session = entityManager.unwrap(Session.class);
-        session.save(account);
-        session.save(study);
+        Post post01 = session.get(Post.class, 1l);
+        session.delete(post01);
+
     }
 }
