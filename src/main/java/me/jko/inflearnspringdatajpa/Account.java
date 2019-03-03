@@ -2,6 +2,8 @@ package me.jko.inflearnspringdatajpa;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -26,6 +28,9 @@ public class Account {
     )
     private Address address;
 
+    @OneToMany(mappedBy = "owner")
+    private Set<Study> studies = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -48,5 +53,47 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Set<Study> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(Set<Study> studies) {
+        this.studies = studies;
+    }
+
+    public void addStudy(Study study) {
+        this.getStudies().add(study);
+        study.setOwner(this);
+    }
+
+    public void removeStudy(Study study){
+        this.getStudies().remove(study);
+        study.setOwner(null);
     }
 }
