@@ -20,6 +20,12 @@ public class Account {
     @Transient //column으로 mapping 안함
     private String no;
 
+    @Embedded
+    @AttributeOverrides(
+            @AttributeOverride(name="street", column = @Column(name="home_street"))
+    )
+    private Address address;
+
     public Long getId() {
         return id;
     }
